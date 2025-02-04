@@ -1,0 +1,2 @@
+/* O(2n + 5) simplifica para O(n) porque o ciclo se repete apenas uma vez, ainda tenha n 7 vezes. Mas continua a
+ser apenas um loop simples apenas. Caso houvessem 2 loops um dentro outro a complexidade seria O(n^2)*/
