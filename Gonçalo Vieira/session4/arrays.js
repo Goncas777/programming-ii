@@ -17,9 +17,9 @@ try {
             age: parseInt(values[2])
         };
     })
-    .filter(row => !isNaN(row.age)); // Filtra as linhas onde "age" não é NaN
+    .filter(row => !isNaN(row.age));
 
-    fs.writeFileSync('session4_data.json', JSON.stringify(data, null, 2));
+    fs.writeFileSync('session4_data.json', JSON.stringify(data,null,2));
     console.log(csvData);
 
 
