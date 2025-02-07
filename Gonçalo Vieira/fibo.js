@@ -1,4 +1,4 @@
-let num=1200;
+let num=1000;
 let arr=[];
 
 
