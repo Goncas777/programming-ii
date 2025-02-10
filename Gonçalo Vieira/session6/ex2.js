@@ -1,23 +1,46 @@
-function flattenObject(obj, parent = '', result = {}) {
-    // Iterate through each key in the object
-    for (let key in obj) {
-      // Check if the value is an object (and not an array or primitive value)
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
-        // Recurse, append the current key to the parent path
-        flattenObject(obj[key], parent ? `${parent}.${key}` : key, result);
-      } else {
-        // If it's a primitive value, add to result with the full path
-        result[parent ? `${parent}.${key}` : key] = obj[key];
-      }
-    }
-    return result;
+const nested = {
+  a: 1,
+  b: { c: 2, d: { e: 3 } },
+  f: [4, 5]
+};
+
+function traverse(obj, path = [], map = new Map()) {
+
+  if (typeof obj !== 'object') {
+    map.set(path.join('.'), obj);
+    return;
   }
-  
-  const nested = {  
-    a: 1,  
-    b: { c: 2, d: { e: 3 } },  
-    f: [4, 5]  
-  };
-  
-  console.log(flattenObject(nested));
-  
+  for (const key in obj) {
+    traverse(obj[key], [...path, key], map);
+  }
+  return map;
+}
+
+
+
+
+function traverse2(obj, path = []) {
+  if (typeof obj !== 'object') {
+    console.log(path.join('/'), ':', obj);
+    return;
+  }
+  for (const key in obj) {
+    traverse2(obj[key], [...path, key]);
+  }
+}
+
+
+
+
+//Decidi fazer 2 funções para comparar o tempo de cada uma, uma tem o map e a outra da logo console log como o exemplo do git hub
+
+
+console.time("Com Map");
+console.log(traverse(nested));
+console.timeEnd("Com Map");
+
+console.time("Sem Map");
+traverse2(nested);
+console.timeEnd("Sem Map");
+
+//Sem Map é bem mais rapido, quase 10x mais rapido
