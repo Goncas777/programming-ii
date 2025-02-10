@@ -19,7 +19,7 @@ try {
     })
     .filter(row => !isNaN(row.age));
 
-    fs.writeFileSync('session4_data.json', JSON.stringify(data,null,2));
+    fs.writeFileSync('session4_data.json', JSON.stringify(data,null));
     console.log(csvData);
 
 
