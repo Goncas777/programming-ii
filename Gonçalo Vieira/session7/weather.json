@@ -1,17 +1,17 @@
 [
   {
     "city": "London",
-    "temp": 2.36,
-    "humidity": 91
+    "temp": 3.94,
+    "humidity": 89
   },
   {
     "city": "Paris",
-    "temp": 3.11,
-    "humidity": 97
+    "temp": 4.14,
+    "humidity": 85
   },
   {
     "city": "Tokyo",
-    "temp": 2.26,
-    "humidity": 57
+    "temp": 2.48,
+    "humidity": 47
   }
 ]
