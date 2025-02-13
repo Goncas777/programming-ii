@@ -10,13 +10,15 @@ async function fetchUser(city) {
 
         return {
             city: data.name,
-            temp: data.main.temp,
+            temp: data.main.temp,   
             humidity: data.main.humidity
         };
     } catch (error) {
         console.error(error.message);
     }
 }
+
+//8d8c86a8-0847-4a05-b2f4-5fc3a66cdc3c
 
 async function fetchWeather() {  
     const cities = City;
