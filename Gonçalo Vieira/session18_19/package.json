@@ -1,0 +1,12 @@
+{
+  "name": "session18_19",
+  "version": "1.0.0",
+  "description": "myproj",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
