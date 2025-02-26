@@ -1,28 +1,35 @@
-import {price,availablecrypto,variation,supply,about,all} from "./dataprocess.js";
+import {coin,availablecrypto, all, validInfo, validoperation} from "./dataprocess.js";
+import { allcommands } from "./info.js";
 const args = process.argv.slice(2);
 
 
 
-if (args.length === 0) {
-    console.log('Invalid prompt');
-} else if (args[0] === 'cryptos') { 
-    console.log('Available disponíveis:');
-    availablecrypto.forEach(crypto => {
-        console.log(crypto);
-    });
-} else if (availablecrypto.includes(args[0].toLowerCase()) && args[1] == "price") {
-    price(args[0].toLowerCase());
-} else if (availablecrypto.includes(args[0].toLowerCase()) && args[1] == "variation") {
-    variation(args[0].toLowerCase());
-} else if (availablecrypto.includes(args[0].toLowerCase()) && args[1] == "supply") {
-    supply(args[0].toLowerCase());
-} else if (availablecrypto.includes(args[0].toLowerCase()) && args[1] == "about") {
-    about(args[0].toLowerCase());
-} else if (availablecrypto.includes(args[0].toLowerCase()) && args[1] == "all") {
-    all(args[0].toLowerCase());
-} else {
-    console.log('Unknown cryptocurrency or command. Use "helpme" to see available commands.');
+switch (true) {
+    case args.length === 0:
+        console.log('Invalid prompt');
+        allcommands();
+        break;
+    case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'cryptos':
+        console.log('Available cryptocurrencies:');
+        availablecrypto.forEach(crypto => console.log(crypto));
+        break;
+    case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'info':
+        console.log('Available info:');
+        validInfo.forEach(info => console.log(info));
+        break;
+    case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'operations':
+        console.log('Available operations:');
+        validoperation.forEach(operation => console.log(operation));
+        break;
+    case availablecrypto.includes(args[0].toLowerCase()) && validoperation.includes(args[1].toLowerCase()):
+        coin(args[0].toLowerCase(),args[1].toLowerCase());
+        break;
+    case args[0].toLowerCase() === 'all' && Object.keys(validInfo).includes(args[1].toLowerCase()):
+        all(args[1].toLowerCase());
+        break;
+    case args[0].toLowerCase() === 'helpme':
+        allcommands();
+        break;
+    default:
+        console.log('Unknown cryptocurrency or command. Use "helpme" to see available commands.');
 }
-
-
-
