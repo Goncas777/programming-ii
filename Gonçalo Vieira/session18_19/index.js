@@ -1,35 +1,62 @@
-import {coin,availablecrypto, all, validInfo, validoperation} from "./dataprocess.js";
+import { coin, availablecrypto, all, validInfo, validoperation, saveToFile } from "./dataprocess.js";
 import { allcommands } from "./info.js";
+
 const args = process.argv.slice(2);
 
+let saveOutput = false;
+if (args.includes("save")) {
+    saveOutput = true;
+    args.pop(); // Remove 'save' from the arguments list
+}
 
+let output = "";
 
 switch (true) {
     case args.length === 0:
-        console.log('Invalid prompt');
+        output = 'Invalid prompt';
+        console.log(output);
         allcommands();
         break;
     case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'cryptos':
-        console.log('Available cryptocurrencies:');
-        availablecrypto.forEach(crypto => console.log(crypto));
+        output = 'Available cryptocurrencies:\n' + availablecrypto.join("\n");
+        console.log(output);
         break;
     case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'info':
-        console.log('Available info:');
-        validInfo.forEach(info => console.log(info));
+        output = 'Available info:\n' + Object.keys(validInfo).join("\n");
+        console.log(output);
         break;
     case args[0].toLowerCase() === 'available' && args[1].toLowerCase() === 'operations':
-        console.log('Available operations:');
-        validoperation.forEach(operation => console.log(operation));
+        output = 'Available operations:\n' + validoperation.join("\n");
+        console.log(output);
         break;
     case availablecrypto.includes(args[0].toLowerCase()) && validoperation.includes(args[1].toLowerCase()):
-        coin(args[0].toLowerCase(),args[1].toLowerCase());
+        coin(args[0].toLowerCase(), args[1].toLowerCase());
         break;
     case args[0].toLowerCase() === 'all' && Object.keys(validInfo).includes(args[1].toLowerCase()):
-        all(args[1].toLowerCase());
+        const infoType = args[1].toLowerCase();
+        output = `🌟 🔍 Crypto ${infoType.toUpperCase()} Table 🌟\n`;
+        all(infoType);
         break;
     case args[0].toLowerCase() === 'helpme':
         allcommands();
         break;
     default:
-        console.log('Unknown cryptocurrency or command. Use "helpme" to see available commands.');
+        output = 'Unknown cryptocurrency or command. Use "helpme" to see available commands.';
+        console.log(output);
 }
+
+if (saveOutput) {
+    const filename = "crypto_output.txt";
+
+    if (args[0].toLowerCase() === 'all' && Object.keys(validInfo).includes(args[1].toLowerCase())) {
+        all(args[1].toLowerCase()).then(output => {
+            saveToFile(filename, output);
+        });
+    } else if (availablecrypto.includes(args[0].toLowerCase()) && validoperation.includes(args[1].toLowerCase())) {
+        coin(args[0].toLowerCase(), args[1].toLowerCase()).then(output => {
+            saveToFile(filename, output);
+        });
+    }
+}
+
+
